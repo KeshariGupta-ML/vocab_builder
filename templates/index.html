@@ -91,9 +91,11 @@
 </body>
 </html>
 <script>
+
   $(document).ready(function(){
   let mock=1;
   let revision=1;
+
   $('input[type="radio"]').click(function(){
   if ($(this).is(':checked')) {
     var type=$(this).val();
@@ -174,7 +176,9 @@
 
 
 
-
+$(document).ready(function(){
+    $("#refresh").trigger('click');
+});
 
 
 

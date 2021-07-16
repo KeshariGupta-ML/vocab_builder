@@ -24,7 +24,7 @@ def get_question(_type):
             else:
                 resp = {"result": df.iloc[rand_int, 0].capitalize(), "ans": df.iloc[rand_int, 1], "desc": df.iloc[rand_int, 2],
                         "synonym":"_"}
-            
+
         else:
             resp={"result":df.iloc[rand_int,0].capitalize(),"ans":df.iloc[rand_int,1],"desc":df.iloc[rand_int,2],"synonym": df.iloc[rand_int,3]}
         time.sleep(1)
@@ -55,5 +55,5 @@ def get_question(_type):
 
 
 if __name__=="__main__":
-    app.run("localhost","2100",debug=True)
-    # app.run()
+    # app.run("localhost","2100",debug=True)
+    app.run()
