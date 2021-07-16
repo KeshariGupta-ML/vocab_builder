@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Data Science Mock Interview Sample Question| Practice</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" href="data:,">
+</head>
+<body>
+
+<div class="container">
+    <div class="row" align="center">
+        <div class="col-md-12" align="center">
+            <!--    <marquee  behavior="scroll" direction="down" align="center"><h2 align="center">Data Science Sample Practice Question</h2></marquee>-->
+            <h2 align="center">Vocab Builder</h2>
+        </div>
+    </div>
+
+
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-4"><label>Practice words:<span id="attempted">1</span></label></div>
+                <div class="col-md-8">
+                    <input class="form-check-input" type="radio" name="question_type" id="inlineRadio1"
+                           value="0" checked>English-To-Hindi Practice &nbsp&nbsp&nbsp
+                    <input class="form-check-input" type="radio" name="question_type" id="inlineRadio2"
+                           value="1">Hindi-To-English Practice
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row" style="min-height:110px;padding:0px 15px">
+            <div class="col-md-6" id="question" style="min-height:110px;padding:10px 10px">
+                Introduce youself and tell me about projects in breif.
+            </div>
+            <div class="col-md-6" style="background-color:#f6f6f6;min-height:110px;padding:10px 10px">
+                <div class="panel-collapse collapse" id="collapse_div">
+                    <div class="row">
+                    <div class="col-md-12" id="ans_panel" >
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" id="desc" >
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" id="synonym" >
+
+                    </div>
+                </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" align="center">
+            <button type="button" class="btn btn-success" id="refresh">Next Word</button>
+            <button type="button" class="btn btn-info"  data-toggle="collapse" href="#collapse_div" id="show_ans">Check Answer</button>
+            <button type="button" class="btn btn-warning" data-toggle="collapse" href="#collapse_ans">Show Examples
+            </button>
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-12">
+            <div id="collapse_ans" class="panel-collapse collapse">
+                <div class="panel panel-info">
+
+                    <div class="panel-heading"><b>Examples :</b></div>
+
+
+                        <ul class="list-group" id="examples">
+                            <li class="list-group-item">..........</li>
+                            <li class="list-group-item">.............</li>
+                        </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+  $(document).ready(function(){
+  let mock=1;
+  let revision=1;
+  $('input[type="radio"]').click(function(){
+  if ($(this).is(':checked')) {
+    var type=$(this).val();
+     $('#collapse_ans').collapse('hide');
+     $('#collapse_div').collapse('hide');
+    if (type == 0) {
+    mock=mock+1;
+    $.getJSON("/get_question/"+0,function(data) {
+        $("#attempted").text(mock);
+        $("#question").text(data.result);
+        $("#ans_panel").text(data.ans);
+        $("#desc").html("<i>"+data.desc+"</i>");
+         if (data.synonym != "_"){
+           $("#synonym").html("<b> Synonyms: </b> "+data.synonym);
+            }
+            else{
+            $("#synonym").text("");
+            }
+      });
+    }
+    else{
+    $.getJSON("/get_question/"+1,function(data) {
+        revision=revision+1;
+        $("#attempted").text(revision);
+        $("#question").text(data.result);
+        $("#ans_panel").text(data.ans);
+        $("#desc").html("<i>"+data.desc+"</i>");
+         if (data.synonym != "_"){
+           $("#synonym").html("<b> Synonyms: </b> "+data.synonym);
+            }
+            else{
+            $("#synonym").text("");
+            }
+      });
+    }
+  }
+});
+  var loading=`<div class="row" align="center" ><img src="{{ url_for('static',filename='/img/loading2.gif') }}" style="width:auto;height:80px"></div>`;
+  $("#refresh").click(function(){
+    $("#question").html(loading);
+     $('#collapse_ans').collapse('hide');
+     $('#collapse_div').collapse('hide');
+    var ques_type=$('input[name="question_type"]:checked').val();
+    if (ques_type == 0) {
+        mock=mock+1;
+        $.getJSON("/get_question/"+0,function(data) {
+        $("#attempted").text(mock);
+        $("#question").text(data.result);
+        $("#ans_panel").text(data.ans);
+        $("#desc").html("<i>"+data.desc+"</i>");
+
+         if (data.synonym != "_"){
+           $("#synonym").html("<b> Synonyms: </b> "+data.synonym);
+            }
+            else{
+            $("#synonym").text("");
+            }
+      });
+    } else {
+        revision=revision+1;
+        $.getJSON("/get_question/"+1,function(data) {
+        $("#attempted").text(revision);
+        $("#question").text(data.result);
+         $("#ans_panel").text(data.ans);
+         $("#desc").html("<i>"+data.desc+"</i>");
+         if (data.synonym != "_"){
+           $("#synonym").html("<b> Synonyms: </b> "+data.synonym);
+            }
+            else{
+            $("#synonym").text("");
+            }
+      });
+    }
+
+
+  });
+});
+
+
+
+
+
+
+
+</script>
