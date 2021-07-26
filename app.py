@@ -32,7 +32,7 @@ def get_question(_type):
 
         else:
             resp={"result":df.iloc[rand_int,0].capitalize(),"ans":get_code_html(df.iloc[rand_int,1]),"desc":df.iloc[rand_int,2],"synonym": get_code_html(df.iloc[rand_int,3])}
-        time.sleep(1)
+
         # print(resp)
         return jsonify(resp),200
 
@@ -53,7 +53,7 @@ def get_question(_type):
         else:
             resp = {"result": df.iloc[rand_int,1].capitalize(), "ans": get_code_html(df.iloc[rand_int, 0]),
                     "desc": df.iloc[rand_int, 2], "synonym": get_code_html(df.iloc[rand_int, 3])}
-        time.sleep(1)
+
         # print(resp)
         return jsonify(resp), 200
 
