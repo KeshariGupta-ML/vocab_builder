@@ -11,7 +11,11 @@ df=pd.read_excel("assets/Words_dictionary.xls",header=0)
 @app.route('/')
 def hello():
     return render_template("index.html")
-
+def get_code_html(text):
+    temp_text=""
+    for temp in text.split(","):
+        temp_text+='<span class="wrap-word">'+temp+'</span>, '
+    return temp_text[:-2]
 @app.route("/get_question/<int:_type>",methods=["GET"])
 def get_question(_type):
     if not _type:
@@ -19,14 +23,15 @@ def get_question(_type):
         # print(df.head())
         if df.iloc[rand_int,2] is np.nan or df.iloc[rand_int,3] is np.nan:
             if df.iloc[rand_int,2] is np.nan :
-                resp = {"result": df.iloc[rand_int, 0].capitalize(),"ans":df.iloc[rand_int, 1],"desc":"",
-                        "synonym": df.iloc[rand_int,3]}
+                print(get_code_html(df.iloc[rand_int, 1]))
+                resp = {"result": df.iloc[rand_int, 0].capitalize(),"ans":get_code_html(df.iloc[rand_int, 1]),"desc":"",
+                        "synonym": get_code_html(df.iloc[rand_int,3])}
             else:
-                resp = {"result": df.iloc[rand_int, 0].capitalize(), "ans": df.iloc[rand_int, 1], "desc": df.iloc[rand_int, 2],
+                resp = {"result": df.iloc[rand_int, 0].capitalize(), "ans": get_code_html(df.iloc[rand_int, 1]), "desc": df.iloc[rand_int, 2],
                         "synonym":"_"}
 
         else:
-            resp={"result":df.iloc[rand_int,0].capitalize(),"ans":df.iloc[rand_int,1],"desc":df.iloc[rand_int,2],"synonym": df.iloc[rand_int,3]}
+            resp={"result":df.iloc[rand_int,0].capitalize(),"ans":get_code_html(df.iloc[rand_int,1]),"desc":df.iloc[rand_int,2],"synonym": get_code_html(df.iloc[rand_int,3])}
         time.sleep(1)
         # print(resp)
         return jsonify(resp),200
@@ -36,18 +41,18 @@ def get_question(_type):
         # print(df.head())
         if df.iloc[rand_int, 2] is np.nan or df.iloc[rand_int, 3] is np.nan:
             if df.iloc[rand_int, 2] is np.nan:
-                resp = {"result": df.iloc[rand_int, 1].capitalize(), "ans": df.iloc[rand_int, 0], "desc": "",
-                        "synonym": df.iloc[rand_int, 3]}
+                resp = {"result": df.iloc[rand_int, 1].capitalize(), "ans": get_code_html(df.iloc[rand_int, 0]), "desc": "",
+                        "synonym": get_code_html(df.iloc[rand_int, 3])}
 
             else:
-                resp = {"result": df.iloc[rand_int, 1].capitalize(), "ans": df.iloc[rand_int, 0],
+                resp = {"result": df.iloc[rand_int, 1].capitalize(), "ans": get_code_html(df.iloc[rand_int, 0]),
                         "desc": df.iloc[rand_int, 2],
                         "synonym": "_"}
 
 
         else:
-            resp = {"result": df.iloc[rand_int,1].capitalize(), "ans": df.iloc[rand_int, 0],
-                    "desc": df.iloc[rand_int, 2], "synonym": df.iloc[rand_int, 3]}
+            resp = {"result": df.iloc[rand_int,1].capitalize(), "ans": get_code_html(df.iloc[rand_int, 0]),
+                    "desc": df.iloc[rand_int, 2], "synonym": get_code_html(df.iloc[rand_int, 3])}
         time.sleep(1)
         # print(resp)
         return jsonify(resp), 200

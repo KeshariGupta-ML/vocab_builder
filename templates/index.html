@@ -8,6 +8,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="icon" href="data:,">
+    <style>
+         .wrap-word {
+    display: inline-block;
+    color: #5c5c5c;
+    background-color: #fff7f7;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    /* cursor: pointer; */
+    background-image: none;
+    border: 1px solid #fc8787;
+    padding: 2px 3px 1px 3px;
+    font-size: 12px;
+    line-height: 1.42857143;
+    border-radius: 8px;
+    }
+    </style>
 </head>
 <body>
 
@@ -106,7 +127,7 @@
     $.getJSON("/get_question/"+0,function(data) {
         $("#attempted").text(mock);
         $("#question").text(data.result);
-        $("#ans_panel").text(data.ans);
+        $("#ans_panel").html(data.ans);
         $("#desc").html("<i>"+data.desc+"</i>");
          if (data.synonym != "_"){
            $("#synonym").html("<b> Synonyms: </b> "+data.synonym);
@@ -144,7 +165,7 @@
         $.getJSON("/get_question/"+0,function(data) {
         $("#attempted").text(mock);
         $("#question").text(data.result);
-        $("#ans_panel").text(data.ans);
+        $("#ans_panel").html(data.ans);
         $("#desc").html("<i>"+data.desc+"</i>");
 
          if (data.synonym != "_"){
@@ -159,7 +180,7 @@
         $.getJSON("/get_question/"+1,function(data) {
         $("#attempted").text(revision);
         $("#question").text(data.result);
-         $("#ans_panel").text(data.ans);
+         $("#ans_panel").html(data.ans);
          $("#desc").html("<i>"+data.desc+"</i>");
          if (data.synonym != "_"){
            $("#synonym").html("<b> Synonyms: </b> "+data.synonym);
