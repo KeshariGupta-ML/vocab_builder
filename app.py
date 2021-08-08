@@ -21,14 +21,22 @@ def get_question(_type):
     if not _type:
         rand_int=np.random.randint(1,len(df))
         # print(df.head())
-        if df.iloc[rand_int,2] is np.nan or df.iloc[rand_int,3] is np.nan:
+        if df.iloc[rand_int,3] is np.nan:
             if df.iloc[rand_int,2] is np.nan :
                 print(get_code_html(df.iloc[rand_int, 1]))
                 resp = {"result": df.iloc[rand_int, 0].capitalize(),"ans":get_code_html(df.iloc[rand_int, 1]),"desc":"",
-                        "synonym": get_code_html(df.iloc[rand_int,3])}
+                        "synonym": "_"}
             else:
                 resp = {"result": df.iloc[rand_int, 0].capitalize(), "ans": get_code_html(df.iloc[rand_int, 1]), "desc": df.iloc[rand_int, 2],
                         "synonym":"_"}
+        elif df.iloc[rand_int,2] is np.nan:
+            if df.iloc[rand_int,3] is np.nan :
+                print(get_code_html(df.iloc[rand_int, 1]))
+                resp = {"result": df.iloc[rand_int, 0].capitalize(),"ans":get_code_html(df.iloc[rand_int, 1]),"desc":"",
+                        "synonym": "_"}
+            else:
+                resp = {"result": df.iloc[rand_int, 0].capitalize(), "ans": get_code_html(df.iloc[rand_int, 1]), "desc": df.iloc[rand_int, 2],
+                        "synonym":get_code_html(df.iloc[rand_int,3])}
 
         else:
             resp={"result":df.iloc[rand_int,0].capitalize(),"ans":get_code_html(df.iloc[rand_int,1]),"desc":df.iloc[rand_int,2],"synonym": get_code_html(df.iloc[rand_int,3])}
@@ -38,18 +46,27 @@ def get_question(_type):
 
     else:
         rand_int = np.random.randint(1, len(df))
-        # print(df.head())
-        if df.iloc[rand_int, 2] is np.nan or df.iloc[rand_int, 3] is np.nan:
+        if df.iloc[rand_int, 3] is np.nan:
             if df.iloc[rand_int, 2] is np.nan:
+
                 resp = {"result": df.iloc[rand_int, 1].capitalize(), "ans": get_code_html(df.iloc[rand_int, 0]), "desc": "",
-                        "synonym": get_code_html(df.iloc[rand_int, 3])}
+                        "synonym": "_"}
 
             else:
                 resp = {"result": df.iloc[rand_int, 1].capitalize(), "ans": get_code_html(df.iloc[rand_int, 0]),
                         "desc": df.iloc[rand_int, 2],
                         "synonym": "_"}
+        elif df.iloc[rand_int, 2] is np.nan:
+            if df.iloc[rand_int, 3] is np.nan:
 
+                resp = {"result": df.iloc[rand_int, 1].capitalize(), "ans": get_code_html(df.iloc[rand_int, 0]),
+                        "desc": "",
+                        "synonym": "_"}
 
+            else:
+                resp = {"result": df.iloc[rand_int, 1].capitalize(), "ans": get_code_html(df.iloc[rand_int, 0]),
+                        "desc": "",
+                        "synonym": get_code_html(df.iloc[rand_int, 3])}
         else:
             resp = {"result": df.iloc[rand_int,1].capitalize(), "ans": get_code_html(df.iloc[rand_int, 0]),
                     "desc": df.iloc[rand_int, 2], "synonym": get_code_html(df.iloc[rand_int, 3])}
